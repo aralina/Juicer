@@ -10,10 +10,12 @@ public class Juicer {
     public ArrayList<String> getNames() {
        return this.names;
     }
+
     public void setName(ArrayList<String> names) {
         this.names = names;
     }
-    public Juicer creation() {
+
+    public Juicer create() {
         Juicer juice = new Juicer();
         ArrayList<String> list = new ArrayList<String> ();
         try {
@@ -29,10 +31,12 @@ public class Juicer {
         juice.setName(list);
         return juice;
     }
+
     @Override
     public String toString() {
         return (this.names.toString());
     }
+
     public LinkedHashSet<String> getList() {
         LinkedHashSet<String> set = new LinkedHashSet<String> ();
         for(int i = 0;i < this.names.size();i++) {
@@ -42,7 +46,8 @@ public class Juicer {
         }
         return set;
     }
-    public void listMentioned() {
+
+    public void getListMentioned() {
         if (!(this.names.isEmpty())) {
             LinkedHashSet<String> set = this.getList();
             try {
@@ -62,6 +67,7 @@ public class Juicer {
             }
         }
     }
+
     public void sortList() {
         if (!(this.names.isEmpty()))  {
             LinkedHashSet<String> set = this.getList();
@@ -89,6 +95,7 @@ public class Juicer {
             }
         }
     }
+
     public boolean isEntry(ArrayList<String> content,ArrayList<String> store) {
         StringBuffer sb = new StringBuffer();
         for (int j = 0; j < store.size(); j++)
@@ -100,24 +107,25 @@ public class Juicer {
         }
        return true;
     }
+
     public ArrayList<ArrayList<String>> swap (ArrayList<ArrayList<String>> list, int firstIndex,int secondIndex) {
         ArrayList<ArrayList<String>> newList = new ArrayList<ArrayList<String>>();
         for (int i = 0; i < list.size(); i++) {
             if (i == firstIndex) {
                 newList.add(i, list.get(secondIndex));
             }
-            else
-            if (i == secondIndex)
+            else if (i == secondIndex) {
                 newList.add(i, list.get(firstIndex));
-            else
+            } else
                 newList.add(i, list.get(i));
         }
         return newList;
     }
-    public void numberMin() {
+
+    public void getNumberMin() {
         if (!(this.names.isEmpty()))  {
             LinkedHashSet<ArrayList<String>> newNames = new LinkedHashSet<ArrayList<String>>();
-            for(int i = 0;i < this.names.size();i++) {
+            for (int i = 0;i < this.names.size();i++) {
                 ArrayList<String> list = new ArrayList<String> ();
                 StringTokenizer st = new StringTokenizer(this.names.get(i), " ");
                 while (st.hasMoreTokens()) {
@@ -132,16 +140,16 @@ public class Juicer {
                 newNames.add(list);
             }
             ArrayList<ArrayList<String>> name = new ArrayList<ArrayList<String>> ();
-            for(ArrayList<String> a : newNames) {
+            for (ArrayList<String> a : newNames) {
                 name.add(a);
             }
-            for(int i = name.size() - 1;i >= 0; i--)
+            for (int i = name.size() - 1;i >= 0; i--)
                 for (int j = 0; j < i; j++)
                     if (name.get(j).size() > name.get(j + 1).size()) {
                         name = swap(name, j, j + 1);
                     }
             int count;
-            for(int i = 0;i < name.size() - 1;i++) {
+            for (int i = 0;i < name.size() - 1;i++) {
                 count = i;
                 for (int j = count + 1; j < name.size(); j++) {
                     if (isEntry(name.get(i), name.get(j)))
@@ -150,8 +158,8 @@ public class Juicer {
                 i = count++;
             }
             count = 0;
-            for(int i = 0;i < name.size() - 1;i++)
-                if(!(isEntry(name.get(i),name.get(i + 1))))
+            for (int i = 0;i < name.size() - 1;i++)
+                if (!(isEntry(name.get(i),name.get(i + 1))))
                     count++;
             count++;
             try {

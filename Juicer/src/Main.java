@@ -4,8 +4,8 @@
 public class Main {
     public static void main(String[] args) {
         Juicer juice = new Juicer();
-        juice = juice.creation();
-        juice.listMentioned();
+        juice = juice.create();
+        juice.getListMentioned();
         final Juicer finalJuice = juice;
         Thread myThread = new Thread(new Runnable() {
             @Override
@@ -14,6 +14,6 @@ public class Main {
             }
         });
         myThread.start();
-        juice.numberMin();
+        juice.getNumberMin();
     }
 }
