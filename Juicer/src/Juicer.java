@@ -18,14 +18,15 @@ public class Juicer {
     public Juicer create() {
         Juicer juice = new Juicer();
         ArrayList<String> list = new ArrayList<String> ();
+
         try {
             BufferedReader buf = new BufferedReader(new FileReader("juice.in"));
             String bufString = "";
-            while((bufString = buf.readLine()) != null) {
+            while ((bufString = buf.readLine()) != null) {
                 list.add(bufString);
             }
             buf.close();
-        } catch(Exception e){
+        } catch(Exception e) {
             System.err.println(e.getMessage());
         }
         juice.setName(list);
@@ -39,17 +40,20 @@ public class Juicer {
 
     public LinkedHashSet<String> getList() {
         LinkedHashSet<String> set = new LinkedHashSet<String> ();
-        for(int i = 0;i < this.names.size();i++) {
+
+        for (int i = 0; i < this.names.size(); i++) {
             StringTokenizer st = new StringTokenizer(this.names.get(i), " ");
-            while (st.hasMoreTokens())
+            while (st.hasMoreTokens()) {
                 set.add(st.nextToken());
+            }
         }
         return set;
     }
 
     public void getListMentioned() {
-        if (!(this.names.isEmpty())) {
+        if (!this.names.isEmpty()) {
             LinkedHashSet<String> set = this.getList();
+
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter("juice1.out"));
                 bw.write(set.toString());
@@ -69,9 +73,10 @@ public class Juicer {
     }
 
     public void sortList() {
-        if (!(this.names.isEmpty()))  {
+        if (!this.names.isEmpty()) {
             LinkedHashSet<String> set = this.getList();
             ArrayList<String> list = new ArrayList<String>(set);
+
             Collections.sort(list, new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {
@@ -98,23 +103,27 @@ public class Juicer {
 
     public boolean isEntry(ArrayList<String> content,ArrayList<String> store) {
         StringBuffer sb = new StringBuffer();
-        for (int j = 0; j < store.size(); j++)
+
+        for (int j = 0; j < store.size(); j++) {
             sb.append(store.get(j));
+        }
         for (int i = 0; i < content.size(); i++) {
             String check = content.get(i);
-            if(sb.indexOf(check) == -1)
+            if (sb.indexOf(check) == -1) {
                 return false;
+            }
         }
        return true;
     }
 
-    public ArrayList<ArrayList<String>> swap (ArrayList<ArrayList<String>> list, int firstIndex,int secondIndex) {
+    public ArrayList<ArrayList<String>> swap(ArrayList<ArrayList<String>> list,
+                                              int firstIndex, int secondIndex) {
         ArrayList<ArrayList<String>> newList = new ArrayList<ArrayList<String>>();
+
         for (int i = 0; i < list.size(); i++) {
             if (i == firstIndex) {
                 newList.add(i, list.get(secondIndex));
-            }
-            else if (i == secondIndex) {
+            } else if (i == secondIndex) {
                 newList.add(i, list.get(firstIndex));
             } else
                 newList.add(i, list.get(i));
@@ -123,9 +132,12 @@ public class Juicer {
     }
 
     public void getNumberMin() {
-        if (!(this.names.isEmpty()))  {
-            LinkedHashSet<ArrayList<String>> newNames = new LinkedHashSet<ArrayList<String>>();
-            for (int i = 0;i < this.names.size();i++) {
+        if (!this.names.isEmpty())  {
+            LinkedHashSet<ArrayList<String>> newList = new LinkedHashSet<ArrayList<String>>();
+            ArrayList<ArrayList<String>> name = new ArrayList<ArrayList<String>> ();
+            int count;
+
+            for (int i = 0; i < this.names.size(); i++) {
                 ArrayList<String> list = new ArrayList<String> ();
                 StringTokenizer st = new StringTokenizer(this.names.get(i), " ");
                 while (st.hasMoreTokens()) {
@@ -137,30 +149,31 @@ public class Juicer {
                         return o1.compareTo(o2);
                     }
                 });
-                newNames.add(list);
+                newList.add(list);
             }
-            ArrayList<ArrayList<String>> name = new ArrayList<ArrayList<String>> ();
-            for (ArrayList<String> a : newNames) {
+
+            for (ArrayList<String> a : newList) {
                 name.add(a);
             }
-            for (int i = name.size() - 1;i >= 0; i--)
+            for (int i = name.size() - 1; i >= 0; i--)
                 for (int j = 0; j < i; j++)
                     if (name.get(j).size() > name.get(j + 1).size()) {
                         name = swap(name, j, j + 1);
                     }
-            int count;
-            for (int i = 0;i < name.size() - 1;i++) {
+            for (int i = 0; i < name.size() - 1; i++) {
                 count = i;
                 for (int j = count + 1; j < name.size(); j++) {
-                    if (isEntry(name.get(i), name.get(j)))
+                    if (isEntry(name.get(i), name.get(j))) {
                         name = swap(name, ++count, j);
+                    }
                 }
                 i = count++;
             }
             count = 0;
-            for (int i = 0;i < name.size() - 1;i++)
-                if (!(isEntry(name.get(i),name.get(i + 1))))
+            for (int i = 0; i < name.size() - 1; i++)
+                if (!isEntry(name.get(i), name.get(i + 1))) {
                     count++;
+                }
             count++;
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter("juice3.out"));
