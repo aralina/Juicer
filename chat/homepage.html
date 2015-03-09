@@ -4,43 +4,41 @@
     <title>ChitTalk</title>
     <meta charset="utf-8">
     <link href="style.css" rel="stylesheet">
+    <script src="chat.js"></script>
 </head>
-<body class="b-page">
-<div class="b-page_head-line">
+
+<body onload="run();">
+
+<section class="chat">
+<div class="list_user" align="right">
+    <form>
+    <input type="button" id="set" value="Set username" onclick="setUsername()">
+    <input type="button" id="change" value="Change" onclick="changeUsername()">
+    </form>
+</div>
     <div class="b-head-line_text">
         ChitTalk
     </div>
-    <div class="b-menu">
-        <a href="#" class="b-link_menu">User</a>
-    </div>
+<div class="b-field" id="fieldMessages">
 </div>
-<div class="b-page_field">
-    <div class="b-field">
 
-    </div>
-</div>
 <div class="b-page_list">
     <div class="b-list_name" align="center">
         Online users:
     </div>
 </div>
-<div class="b-page_field">
+
     <div class="b-field_text">
         Message:
     </div>
-    <div class="b-field_message">
-        <input type="text" class="b-input b-input_message">
+    <div id="message">
+       <p> <input type="text" id ="newMessage" class="b-input">
+        <button id="send" type="button" class="send">Send</button>
+       <button id="delete" type="button" class="delete">Delete</button> </p>
     </div>
-    <div class="b-field_button">
-        <a href="#"><p><input type="image" class="b-field_button" src="Button.png" alt="Send"></p></a>
-    </div>
-</div>
-<div class="b-page_footer">
-<div class="b-footer_text">
+<div class="footer">
     Service Uptime:
 </div>
-    <div class="b-footer_indicator">
-    </div>
-</div>
+            </section>
 </body>
 </html>

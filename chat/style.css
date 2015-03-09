@@ -1,16 +1,19 @@
-.b-page
+.chat
 {
     width: 100%;
-    margin:0;
+    height: 100%;
+    margin: 0;
     background-color: white;
 }
-.b-page_head-line
+.list_user
 {
+    posution:absolute;
     width:100%;
-    height: 15%;
-    margin: 0;
+    height: 45px;
     background-color: #00c9f3;
-    font-size: 40px;
+    font-size: 20px;
+    margin: 0;
+    top: 10%;
 }
 .b-page_list
 {
@@ -32,22 +35,27 @@
     background-color: aliceblue;
     border: 1px solid #003272;
     left: 1%;
-    top: 11%;
+    top: 15%;
     width: 66%;
-    height: 66%;
+    height: 61%;
 
 }
-.b-page_footer
+.footer
 {
     font-size: 20px;
     background-color: white;
+    position: absolute;
+    color: #003272;
+    left: 78%;
+    top: 95%;
 }
 .b-head-line_text
 {
-    position: relative;
+    position: absolute;
     color: white;
     left: 89px;
-    top: 7px;
+    top: 9px;
+    font-size: 40px;
 }
 .b-field_text
 {
@@ -62,9 +70,6 @@
     position: absolute;
     border: 2px solid #003272;
     border-radius: 10px;
-}
-.b-input_message
-{
     background-color: white;
     overflow: auto;
     font-size: 22px;
@@ -74,21 +79,7 @@
     height: 9%;
     word-break: break-all;
 }
-.b-field_button
-{
-    left: 75%;
-    top: 83%;
-    position: absolute;
-    color: black;
-}
-.b-footer_text
-{
-    position: absolute;
-    color: #003272;
-    font-size: 20px;
-    left: 78%;
-    top: 95%;
-}
+
 .b-list_name
 {
     border: 2px solid #003272;
@@ -98,18 +89,41 @@
     color: #003272;
     height: 30px;
 }
-.b-link_menu
+.Check
+{
+    background-color: aquamarine;
+}
+.checkbox
+{
+
+}
+.messageStyle
+{
+
+}
+.send
 {
     position: absolute;
-    text-align: center;
-    color: #003272;
-    font-size: 20px;
-    background-color: white;
-    border: 2px solid #003272;
-    display: table-cell;
-    left: 79%;
-    top: 1%;
-    width: 10%;
-    height: 22px;
-    text-decoration: none;
+    left:75%;
+    top: 85%;
 }
+.delete
+{
+    position: absolute;
+    left:80%;
+    top: 85%;
+}
+.text{
+    vertical-align : middle;
+    margin-bottom:10%;
+}
+
+.mesStyle{
+    padding-left:20px;
+}
+
+.yourMesStyle{
+    padding-left:20px;
+
+}
+
