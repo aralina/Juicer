@@ -2,7 +2,7 @@
  * Created by home on 03.03.15.
  */
 function run() {
-    var user;
+    var user="";
     var appContainer = document.getElementsByClassName('chat')[0];
     appContainer.addEventListener('click', delegateEvent);
     appContainer.addEventListener('change', delegateEvent);
@@ -18,6 +18,9 @@ function delegateEvent(evtObj) {
     if (evtObj.type === 'click' && evtObj.target.classList.contains('delete')) {
         deleteMsg(evtObj);
     }
+    if (evtObj.type === 'click' && evtObj.target.classList.contains('edit')) {
+        editMsg(evtObj);
+    }
 }
 function setUsername() {
     user = "";
@@ -28,6 +31,10 @@ function changeUsername() {
     user = prompt("Username","");
 }
 function createItem(value) {
+    if (user === null) {
+        alert("Input your username!");
+        return;
+    }
     var divItem = document.createElement('div');
     var textMessage = document.createElement('p');
     var checkbox = document.createElement('input');
@@ -64,4 +71,14 @@ function deleteMsg() {
             messages[i].remove();
         }
     }
+}
+function editMsg() {
+    var messages = document.getElementsByClassName('Check');
+    var messageIn =  messages[0].innerHTML;
+    var pos = messageIn.indexOf(':') + 2;
+    var messageOut = messageIn.substring(pos + 2);
+    var messageNew = prompt("Edit", messageOut);
+    messageIn = messageIn.replace(messageOut, messageNew);
+    messages[0].innerHTML = messageIn;
+    setMarker(messages[0]);
 }

@@ -113,6 +113,12 @@
     left:80%;
     top: 85%;
 }
+.edit
+{
+    position: absolute;
+    left:85%;
+    top: 85%;
+}
 .text{
     vertical-align : middle;
     margin-bottom:10%;
