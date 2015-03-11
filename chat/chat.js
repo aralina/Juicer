@@ -1,8 +1,9 @@
 /**
  * Created by home on 03.03.15.
  */
+var user = "";
 function run() {
-    var user="";
+
     var appContainer = document.getElementsByClassName('chat')[0];
     appContainer.addEventListener('click', delegateEvent);
     appContainer.addEventListener('change', delegateEvent);
@@ -11,7 +12,11 @@ function delegateEvent(evtObj) {
     if (evtObj.type === 'click' && evtObj.target.classList.contains('send')) {
         onSendMessageButton(evtObj);
     }
-    if (evtObj.type === 'change' && evtObj.target.nodeName == 'INPUT') {
+    if (evtObj.type === 'change' && evtObj.target.nodeName == 'INPUT'
+        && evtObj.target.classList.contains('send') == false
+        && evtObj.target.classList.contains('edit') == false
+        && evtObj.target.classList.contains('delete') == false
+        && evtObj.target.classList.contains('b-input') == false) {
         var labelEl = evtObj.target.parentElement;
         setMarker(labelEl);
     }
@@ -23,15 +28,13 @@ function delegateEvent(evtObj) {
     }
 }
 function setUsername() {
-    user = "";
     user = prompt("Username","");
 }
 function changeUsername() {
-    user = "";
     user = prompt("Username","");
 }
 function createItem(value) {
-    if (user === null) {
+    if (user === "") {
         alert("Input your username!");
         return;
     }
@@ -74,10 +77,14 @@ function deleteMsg() {
 }
 function editMsg() {
     var messages = document.getElementsByClassName('Check');
+    if (messages.length > 1) {
+        alert("You chose too much messages! Please choose one");
+        return;
+    }
     var messageIn =  messages[0].innerHTML;
-    var pos = messageIn.indexOf(':') + 2;
-    var messageOut = messageIn.substring(pos + 2);
-    var messageNew = prompt("Edit", messageOut);
+    var pos = messageIn.indexOf(':') + 4;
+    var messageOut = messageIn.substring(pos);
+    var messageNew = prompt("Edit message:", messageOut);
     messageIn = messageIn.replace(messageOut, messageNew);
     messages[0].innerHTML = messageIn;
     setMarker(messages[0]);
