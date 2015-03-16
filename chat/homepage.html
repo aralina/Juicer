@@ -19,24 +19,33 @@
     <div class="b-head-line_text">
         ChitTalk
     </div>
-<div class="b-field" id="fieldMessages">
-</div>
 
+    <div class="b-field_text">
+        Message:
+    </div>
 <div class="b-page_list">
     <div class="b-list_name" align="center">
         Online users:
     </div>
 </div>
 
-    <div class="b-field_text">
-        Message:
-    </div>
+    <div>
+        <div class="b-field" id="allMessages">
+
+        </div>
     <div id="message">
-       <p> <input type="text" id ="newMessage" class="b-input">
-        <button id="send" type="button" class="send">Send</button>
-       <button id="delete" type="button" class="delete">Delete</button>
+       <p>
+           <div>
+           <textarea type="text" id ="sendMessage" class="b-input"></textarea>
+        <input id="send" type="submit" class="send" value="Send">
+        <button id="delete" type="button" class="delete">Delete</button>
         <button id="edit" type="button" class="edit">Edit</button>
+           </div>
+
+
        </p>
+    </div>
+
     </div>
 <div class="footer">
     Service Uptime:
