@@ -2,6 +2,12 @@
  * Created by home on 03.03.15.
  */
 var user = "";
+var uniqueId = function() {
+    var date = Date.now();
+    var random = Math.random() * Math.random();
+    return Math.floor(date * random).toString();
+};
+
 var messageList = [];
 function run() {
     var appContainer = document.getElementsByClassName('chat')[0];
@@ -10,7 +16,8 @@ function run() {
         var allMessages = restore();
         createAllMessages(allMessages);
     }
-    if(user === "")
+
+    if ((user === "")||(user === undefined))
         alert("Welcome, stranger");
     else alert("Welcome back, " + user);
     appContainer.addEventListener('click', delegateEvent);
@@ -21,11 +28,7 @@ function delegateEvent(evtObj) {
     if (evtObj.type === 'click' && evtObj.target.classList.contains('send')) {
         onSendMessageButton(evtObj);
     }
-    if (evtObj.type === 'change' && evtObj.target.nodeName == 'INPUT'
-        && evtObj.target.classList.contains('send') == false
-        && evtObj.target.classList.contains('edit') == false
-        && evtObj.target.classList.contains('delete') == false
-        && evtObj.target.classList.contains('b-input') == false) {
+    if (evtObj.type === 'change' && evtObj.target.nodeName == 'INPUT') {
         var labelEl = evtObj.target.parentElement;
         setMarker(labelEl);
     }
@@ -63,60 +66,64 @@ function onSendMessageButton() {
     }
 
     var text = document.getElementById('sendMessage');
-    var choice = document.getElementsByClassName('b-field')[0];
-    var option = document.createElement("option");
-    option.text = user + ' :   ' + text.value;
-    option.value = Math.random() * (1000 - 1) + 1;
+    if (text.value == '')
+    return;
+    var newMessage = theMessage(text.value);
+    messageList.push(newMessage);
+    addMessage(newMessage);
+    store(messageList);
+    text.value = '';
+
+}
+
+function addMessage(message) {
+    if (!message)
+    return;
+    var item = createItem(message);
+    var items = document.getElementsByClassName('b-field')[0];
+    items.appendChild(item);
+}
+
+function createItem(message) {
     var divItem = document.createElement('div');
+    divItem.id = message.id;
     var textMessage = document.createElement('p');
     divItem.classList.add('messageStyle');
-    divItem.id = option.value;
     textMessage.setAttribute('type', 'value');
     var checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
     divItem.appendChild(textMessage);
     divItem.appendChild(checkbox);
-    divItem.appendChild(document.createTextNode(option.text));
+    divItem.appendChild(document.createTextNode(message.name + ' :   ' + message.message));
 
-    choice.appendChild(divItem);
-
-    messageList.push(theMessage(option.text, option.value));
-    store(messageList);
-    text.value = '';
+    return divItem;
 }
 
-var theMessage = function(text, value){
+var theMessage = function(text){
     return {
         name:user,
         message:text,
         check:true,
-        id :value
+        id :uniqueId()
     };
 };
-
-function selectMsg(evtObj) {
-    var sendMessage = document.getElementById('sendMessage');
-    var pos = document.getElementById("allMessages").selectedIndex;
-    var choice = document.getElementById("allMessages")[pos];
-    pos = choice.text.indexOf(':');
-    if (choice.text != null) {
-        sendMessage.value = choice.text.substring(pos + 4);
-    }
-}
 
 function deleteMsg() {
     var messages = document.getElementsByClassName('Check');
     if (messages.length != 0) {
         for (var i = messages.length - 1; i >= 0; i--) {
-            for (var j = 0; j < messageList.length; j++)
-            if(messages[0].id == messageList[j].id) {
-                var newMessageList = [];
-                for (var k = 0; k < messageList.length - 1; k++)
-                if (k != j)
-                newMessageList[k] = messageList[k];
-                messageList = newMessageList;
+            var id = messages[i].id;
+            for (var j = 0; j < messageList.length; j++) {
+                if (id == messageList[j].id) {
+                    messageList[j].message = 'deleted';
+                }
             }
-            messages[i].remove();
+            var message = messages[i].innerHTML;
+            var pos = message.lastIndexOf(':') + 4;
+            var oldMessage = message.substring(pos);
+            message = message.replace(oldMessage, 'deleted');
+            messages[i].innerHTML = message;
+            setMarker(messages[i]);
         }
     }
     store(messageList);
@@ -129,48 +136,46 @@ function editMsg() {
         return;
     }
     var messageIn =  messages[0].innerHTML;
-    var pos = messageIn.lastIndexOf(':') + 2;
+    var pos = messageIn.lastIndexOf(':') + 4;
     var messageOut = messageIn.substring(pos);
     var messageNew = prompt("Edit message:", messageOut);
+    var id = messages[0].id;
+    for (var i = 0; i < messageList.length; i++) {
+        if (id == messageList[i].id) {
+            messageList[i].message = messageNew;
+        }
+    }
     messageIn = messageIn.replace(messageOut, messageNew);
     messages[0].innerHTML = messageIn;
     setMarker(messages[0]);
-
+    store(messageList);
 }
 
 function store(messageList) {
+    if(typeof(Storage) == "undefined") {
+        alert('localStorage is not accessible');
+        return;
+    }
 
     var listAsString = JSON.stringify(messageList);
     localStorage.setItem("Messages list", listAsString);
 }
 
 function restore() {
+    if(typeof(Storage) == "undefined") {
+        alert('localStorage is not accessible');
+        return;
+    }
 
     var item = localStorage.getItem("Messages list");
     return item && JSON.parse(item);
 }
 
-function addAllMessages(message) {
-    var choice = document.getElementById("allMessages");
-    var option = document.createElement("option");
-    option.text =  message.message;
-    option.value = message.id;
-    var divItem = document.createElement('div');
-    var textMessage = document.createElement('p');
-    divItem.classList.add('messageStyle');
-    textMessage.setAttribute('type', 'value');
-    var checkbox = document.createElement('input');
-    checkbox.setAttribute('type', 'checkbox');
-    divItem.appendChild(textMessage);
-    divItem.appendChild(checkbox);
-    divItem.appendChild(document.createTextNode(option.text));
-    choice.appendChild(divItem);
-}
-
 function createAllMessages(allMessages) {
     for (var i = 0; i < allMessages.length; i++) {
         messageList.push(allMessages[i]);
-        addAllMessages(allMessages[i]);
+        addMessage(allMessages[i]);
     }
+    if (allMessages.length > 1)
     user = allMessages[allMessages.length - 1].name;
 }
