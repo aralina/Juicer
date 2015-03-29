@@ -1,0 +1,16 @@
+GET http://192.168.1.8:999/chat?token=TN11EN HTTP/1.1
+Host: 192.168.1.8:999
+Connection: keep-alive
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: ru,en-US;q=0.8,en;q=0.6,pl;q=0.4
+
+
+HTTP/1.1 200 OK
+Date: Sun, 29 Mar 2015 14:49:16 GMT
+Access-control-allow-origin: *
+Content-length: 83
+
+{"messages":["hi","what's up?","what are you doing?","lol","bye"],"token":"TN51EN"}
