@@ -1,6 +1,0 @@
-HTTP/1.1 200 OK
-Date: Sun, 29 Mar 2015 15:00:57 GMT
-Access-control-allow-origin: *
-Content-length: 78
-
-{"messages":["what's up?","what are you doing?","lol","bye"],"token":"TN43EN"}
